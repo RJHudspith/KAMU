@@ -5,7 +5,7 @@
 
 #include "hcubature.h"
 
-typedef enum { NORMAL = 0 , SYMXY = 1 , SYMXY0 = 2 } symmetrise ; 
+typedef enum { NORMAL , SYMXY , SYMXY0 , MKERN } symmetrise ; 
 
 struct integral_args{
   double Mv , Tol ;

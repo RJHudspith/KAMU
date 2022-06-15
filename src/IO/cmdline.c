@@ -32,13 +32,16 @@ read_cmdline( int *err ,
     fprintf( stderr , "[KAMU] Tol is strange %e\n" , fdata.Tol ) ;
     *err = 1 ;
   }
-  fdata.xmin[1] = fdata.xmin[2] = (double)atof( argv[INPUT_YMIN] ) ;
+  fdata.xmin[1] = 0.0 ;
+  fdata.xmin[2] = (double)atof( argv[INPUT_YMIN] ) ;
   if( fdata.xmin[2] < 0 || fdata.xmin[2] > 6.54 ) {
     fprintf( stderr , "[KAMU] Ymin is strange %e\n" , fdata.xmin[2] ) ;
     *err = 1 ;
   }
   if( are_equal( argv[INPUT_SYM] , "NORMAL" ) ) {
     fdata.Sym = NORMAL ;
+  } else if( are_equal( argv[INPUT_SYM] , "MKERN" ) ) {
+    fdata.Sym = MKERN ;
   } else if( are_equal( argv[INPUT_SYM] , "SYMXY" ) ) {
     fdata.Sym = SYMXY ;
   } else if( are_equal( argv[INPUT_SYM] , "SYMXY0" ) ) {
@@ -57,8 +60,8 @@ read_cmdline( int *err ,
   initialise( &fdata.t ) ;
   
   fdata.xmin[0] = 0.0 ;
-  fdata.xmax[2] = fdata.t.Grid.YY[ fdata.t.Grid.nstpy - 1 ] ;
   fdata.xmax[1] = fdata.t.Grid.XX[ fdata.t.Grid.nstpx - 1 ] ;
+  fdata.xmax[2] = fdata.t.Grid.YY[ fdata.t.Grid.nstpy - 1 ] ;
   fdata.xmax[0] = M_PI ;
   fdata.K = NULL ;
   
@@ -72,6 +75,9 @@ read_cmdline( int *err ,
   fprintf( stdout , "[KAMU] using cubature tolerance %g\n" , fdata.Tol ) ;
   switch( fdata.Sym ) {
   case NORMAL : fprintf( stdout , "[KAMU] using the default kernels\n" ) ;
+    fdata.K = malloc( 3*sizeof( struct Kernels ) ) ;
+    break ;
+  case MKERN : fprintf( stdout , "[KAMU] using the M-kernels\n" ) ;
     fdata.K = malloc( 3*sizeof( struct Kernels ) ) ;
     break ;
   case SYMXY  : fprintf( stdout , "[KAMU] using the SYMXY kernels\n" ) ;

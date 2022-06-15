@@ -26,7 +26,7 @@ if !PREF
 
 Bindir = "${prefix}"/bin
 
-bin_PROGRAMS = KAMU KAMU2 KINT KINT2
+bin_PROGRAMS = KAMU KINT
 
 KAMU_SOURCES = amu_integral.c
 KAMU_CFLAGS = ${CFLAGS} -I${TOPDIR}/src/HEADERS/

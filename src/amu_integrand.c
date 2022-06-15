@@ -58,8 +58,8 @@ main( const int argc ,
   }
 
   // fine-grained scan
-  const double fine_max = 0.5 ;
-  for( y = 0.05 ; y < fine_max ; y+=0.02 ) {
+  const double fine_max = 1.0 ;
+  for( y = fdata.xmin[2] ; y < fine_max ; y+=0.02 ) {
     fdata.tmp = y ;
     int flag ;
     if( ( flag = hcubature( NKERNEL, integrand, &fdata, 2,
@@ -81,7 +81,7 @@ main( const int argc ,
     xprev = y ;
   }
   // coarse-grained scan
-  for( y = fine_max ; y < 5.5 ; y+=0.2 ) {
+  for( y = fine_max ; y < 6.0 ; y+=0.05 ) {
     fdata.tmp = y ;
     int flag ;
     if( ( flag = hcubature( NKERNEL, integrand, &fdata, 2,
